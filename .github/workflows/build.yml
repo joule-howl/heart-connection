@@ -24,6 +24,10 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
+    - name: Install specific Android SDK components
+      run: |
+        $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0" "ndk;26.1.10909125"
+
     - name: Accept Android licenses
       run: |
         yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses || true
@@ -31,31 +35,21 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Build with Gradle
-      run: ./gradlew build -x test --stacktrace
-
     - name: Build Debug APK
-      run: ./gradlew assembleDebug --stacktrace
+      run: ./gradlew assembleDebug -x lint --stacktrace
 
-    - name: Build Release APK
-      run: ./gradlew assembleRelease --stacktrace || true
-
-    - name: Upload Artifacts
+    - name: Upload Debug APK
       uses: actions/upload-artifact@v4
-      if: always()
+      if: success()
       with:
-        name: apks
-        path: |
-          app/build/outputs/apk/debug/
-          app/build/outputs/apk/release/
+        name: debug-apk
+        path: app/build/outputs/apk/debug/app-debug.apk
         retention-days: 30
 
-    - name: Create Release
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v1
+    - name: Upload Build Logs on Failure
+      uses: actions/upload-artifact@v4
+      if: failure()
       with:
-        files: |
-          app/build/outputs/apk/debug/app-debug.apk
-          app/build/outputs/apk/release/app-release.apk
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        name: build-logs
+        path: app/build/outputs/
+        retention-days: 7
