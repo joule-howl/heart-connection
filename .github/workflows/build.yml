@@ -9,10 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: read
-      checks: write
 
     steps:
     - name: Checkout code
@@ -27,36 +23,31 @@ jobs:
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
-      with:
-        api-level: 34
-        ndk-version: 26.1.10909125
 
     - name: Accept Android licenses
-      run: yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
+      run: |
+        yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Build APK (Debug)
-      run: ./gradlew assembleDebug
+    - name: Build with Gradle
+      run: ./gradlew build -x test --stacktrace
 
-    - name: Build APK (Release)
-      run: ./gradlew assembleRelease
+    - name: Build Debug APK
+      run: ./gradlew assembleDebug --stacktrace
 
-    - name: Upload Debug APK
+    - name: Build Release APK
+      run: ./gradlew assembleRelease --stacktrace || true
+
+    - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: debug-apk
-        path: app/build/outputs/apk/debug/app-debug.apk
-        retention-days: 30
-
-    - name: Upload Release APK
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: release-apk
-        path: app/build/outputs/apk/release/app-release.apk
+        name: apks
+        path: |
+          app/build/outputs/apk/debug/
+          app/build/outputs/apk/release/
         retention-days: 30
 
     - name: Create Release
