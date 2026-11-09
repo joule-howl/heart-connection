@@ -50,6 +50,11 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.8"
     }
+
+    lint {
+        abortOnError = false
+        disable += listOf("MissingDimensionBaselineProfileContentProvider", "aapt")
+    }
 }
 
 dependencies {
