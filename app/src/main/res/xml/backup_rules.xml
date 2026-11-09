@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!--
+   Sample backup scheme xmlns:tools="http://schemas.android.com/tools".
+   full-backup-content>
+
+    <!-- Exclude specific shared preferences that contain GCM registration IDs -->
+    <exclude domain="sharedpref" path="GCM_FRIENDLY_IDS.xml"/>
+    <!-- Include all other shared preferences and databases -->
+    <domain name="database"/>
+    <domain name="sharedpref"/>
+    <domain name="file"/>
+
+    <!-- Exclude device files; unsupported files -->
+    <exclude domain="cache" />
+    <exclude domain="temp" />
+
+</full-backup-content>
+-->
