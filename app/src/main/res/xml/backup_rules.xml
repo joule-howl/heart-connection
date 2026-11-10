@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <full-backup-content>
     <!--
-   Sample backup scheme xmlns:tools="http://schemas.android.com/tools".
-   full-backup-content>
+    Sample backup scheme xmlns:tools="http://schemas.android.com/tools".
+    full-backup-content element
+    -->
 
     <!-- Exclude specific shared preferences that contain GCM registration IDs -->
     <exclude domain="sharedpref" path="GCM_FRIENDLY_IDS.xml"/>
@@ -16,4 +17,3 @@
     <exclude domain="temp" />
 
 </full-backup-content>
--->
