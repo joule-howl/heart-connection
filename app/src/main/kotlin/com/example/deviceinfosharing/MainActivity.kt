@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.sp
 import android.content.Context
 import android.os.Build
 import androidx.activity.compose.setContent
-import com.example.deviceinfosharing.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.util.UUID
@@ -31,15 +30,13 @@ import java.util.UUID
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         Timber.d("MainActivity: Created")
         
         // Get device info
-        val deviceId = getDeviceId()
+        val deviceId = generateOrGetDeviceId()
         val deviceName = Build.DEVICE
         val androidVersion = Build.VERSION.RELEASE
         val manufacturer = Build.MANUFACTURER
@@ -101,9 +98,9 @@ class MainActivity : AppCompatActivity() {
     }
     
     /**
-     * Get or generate device ID
+     * Generate or retrieve stored device ID
      */
-    private fun getDeviceId(): String {
+    private fun generateOrGetDeviceId(): String {
         val prefs = getSharedPreferences("device_prefs", Context.MODE_PRIVATE)
         var deviceId = prefs.getString("device_id", null)
         
