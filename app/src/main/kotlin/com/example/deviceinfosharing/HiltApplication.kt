@@ -15,14 +15,9 @@ class HiltApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         
-        // Initialize Timber logging in debug builds
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-            Timber.d("HiltApplication: Created (DEBUG mode)")
-        } else {
-            Timber.plant(Timber.DebugTree())
-            Timber.d("HiltApplication: Created (RELEASE mode)")
-        }
+        // Initialize Timber logging
+        Timber.plant(Timber.DebugTree())
+        Timber.d("HiltApplication: Created")
         
         // Initialize Firebase
         initializeFirebase()

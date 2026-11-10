@@ -19,14 +19,8 @@ class MyApplication : Application() {
         super.onCreate()
         
         // Initialize Timber logging
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-            Timber.d("MyApplication: Created (DEBUG mode)")
-        } else {
-            // In production, plant a custom tree that sends logs to remote service
-            Timber.plant(Timber.DebugTree())
-            Timber.d("MyApplication: Created (RELEASE mode)")
-        }
+        Timber.plant(Timber.DebugTree())
+        Timber.d("MyApplication: Created")
         
         Timber.d("MyApplication: Hilt dependency injection enabled")
     }
