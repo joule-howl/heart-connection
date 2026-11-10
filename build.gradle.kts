@@ -8,11 +8,6 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.48" apply false
 }
 
-// Add custom task to manage versions
-fun getFirebaseBoM(): String {
-    return "32.7.0"
-}
-
 tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+    delete(layout.buildDirectory)
 }
