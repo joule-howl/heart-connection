@@ -180,3 +180,4 @@ This project is licensed under the MIT License - see LICENSE file for details.
 - OpenWeatherMap for weather API
 - Jetpack team for Compose framework
 - Android community for best practices
+# CI Build Ready
