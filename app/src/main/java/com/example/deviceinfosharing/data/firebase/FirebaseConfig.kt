@@ -1,9 +1,7 @@
 package com.example.deviceinfosharing.data.firebase
 
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
 import timber.log.Timber
 
 /**
@@ -60,7 +58,7 @@ object FirebaseConfig {
      * @return FirebaseDatabase instance
      */
     fun getDatabase(): FirebaseDatabase {
-        return Firebase.database
+        return FirebaseDatabase.getInstance()
     }
     
     /**
