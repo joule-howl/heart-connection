@@ -19,15 +19,16 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      - name: Fix gradlew line endings with Python
+      - name: Regenerate Gradle Wrapper for Linux
         run: |
-          python3 -c "
-          with open('gradlew', 'rb') as f:
-              content = f.read().replace(b'\r\n', b'\n')
-          with open('gradlew', 'wb') as f:
-              f.write(content)
-          "
-          chmod +x gradlew
+          # Xóa bỏ gradlew cũ bị lỗi định dạng
+          rm -rf gradlew gradlew.bat gradle/
+          
+          # Tự động sinh lại bộ gradlew chuẩn cho môi trường Linux
+          gradle wrapper
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
       - name: Build Debug APK
         run: ./gradlew assembleDebug
