@@ -40,9 +40,6 @@ random.properties
 bin/
 gen/
 
-# Gradle wrapper
-gradle/wrapper/gradle-wrapper.jar
-
 # Intellij
 .idea/
 
